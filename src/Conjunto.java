@@ -60,5 +60,48 @@ public class Conjunto {
         return numInsertados;
     }
 
+    public boolean eliminar(int valor){
+        boolean resultado = false;
+        if(contiene(valor)){
+            int pos = 0;
+            while(pos < numElementos && datos[pos] < valor){
+                pos++;
+            }
+            if(pos < numElementos) {
+                for (int i = pos+1; i < numElementos; i++) {
+                    datos[i-1] = datos[i];
+                }
+                numElementos--;
+                datos[numElementos] = Integer.parseInt(null);
+                resultado = true;
+            }
+        }
+        return resultado;
+    }
+
+    public void mostrar(){
+        System.out.println("[");
+        for(int i = 0; i < numElementos-1; i++){
+            System.out.println(datos[i]+ ", ");
+        }
+        if(numElementos > 0){
+            System.out.println(datos[numElementos-1]);
+        }
+        System.out.println("]");
+    }
+
+    public int getElemento(int valor){ return datos[valor];}
+
+    public Conjunto copia(){
+        Conjunto nuevo = new Conjunto(MAXIMO);
+        nuevo.datos = this.datos;
+        nuevo.numElementos = this.numElementos;
+        return nuevo;
+    }
+
+    public void unir(Conjunto conjunto){
+        insertar(conjunto.datos);
+    }
+
 
 }

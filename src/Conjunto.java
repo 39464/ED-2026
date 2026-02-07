@@ -40,10 +40,9 @@ public class Conjunto {
                 datos[pos] = valor;
                 numElementos++;
                 resultado = true;
-
-        } else {
-            resultado = false;
-        }
+            } else {
+                resultado = false;
+            }
     }else {
         resultado = false;
     }
@@ -57,6 +56,7 @@ public class Conjunto {
                 numInsertados++;
             }
         }
+        this.numElementos+=numInsertados;
         return numInsertados;
     }
 
@@ -103,5 +103,52 @@ public class Conjunto {
         insertar(conjunto.datos);
     }
 
+    public Conjunto union(Conjunto conjunto){
+        Conjunto union = new Conjunto(this.MAXIMO+conjunto.MAXIMO);
+        union.insertar(conjunto.datos);
+        union.insertar(this.datos);
+        return union;
+    }
 
+    public boolean iguales(Conjunto conjunto){
+        boolean resultado = true;
+        int i=0;
+        while(i < this.numElementos && resultado){
+            if(conjunto.datos[i] == this.datos[i]){
+                resultado = false;
+            }
+            i++;
+        }
+        return resultado;
+    }
+
+    public Conjunto interseccion(Conjunto conjunto){
+        int maximo = Math.min(this.MAXIMO, conjunto.MAXIMO);
+        Conjunto interseccion = new Conjunto(maximo);
+        interseccion.insertar(this.datos); interseccion.union(conjunto);
+        for(int i = 0; i < this.numElementos; i++){
+            if(interseccion.datos[i] == interseccion.datos[i+1]){
+                interseccion.eliminar(datos[i]);
+            }
+        }
+        return interseccion;
+    }
+
+    public boolean contiene(Conjunto conjunto){
+        return (conjunto.cardinalidad() == this.interseccion(conjunto).cardinalidad());
+    }
+
+    public Conjunto diferencia(Conjunto conjunto){
+        Conjunto diferencia = new Conjunto(this.MAXIMO);
+        diferencia.insertar(this.datos);
+        Conjunto interseccion = this.interseccion(conjunto);
+        for(int i = 0; i < this.numElementos; i++){
+            for(int j = 0; j < this.numElementos; j++){
+                if(diferencia.datos[i] == interseccion.datos[j]){
+                    diferencia.eliminar(datos[i]);
+                }
+            }
+        }
+        return diferencia;
+    }
 }

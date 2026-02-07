@@ -67,7 +67,7 @@ public class Conjunto {
             while(pos < numElementos && datos[pos] < valor){
                 pos++;
             }
-            if(pos < numElementos) {
+            if(pos < numElementos && datos[pos] == valor) {
                 for (int i = pos+1; i < numElementos; i++) {
                     datos[i-1] = datos[i];
                 }
@@ -94,8 +94,7 @@ public class Conjunto {
 
     public Conjunto copia(){
         Conjunto nuevo = new Conjunto(MAXIMO);
-        nuevo.datos = this.datos;
-        nuevo.numElementos = this.numElementos;
+        nuevo.insertar(this.datos);
         return nuevo;
     }
 
@@ -112,19 +111,22 @@ public class Conjunto {
 
     public boolean iguales(Conjunto conjunto){
         boolean resultado = true;
-        int i=0;
-        while(i < this.numElementos && resultado){
-            if(conjunto.datos[i] == this.datos[i]){
-                resultado = false;
+        if(this.cardinalidad() != conjunto.cardinalidad()){
+            resultado = false;
+        }else {
+            int i = 0;
+            while (i < this.numElementos && resultado) {
+                if (conjunto.datos[i] != this.datos[i]) {
+                    resultado = false;
+                }
+                i++;
             }
-            i++;
         }
         return resultado;
     }
 
     public Conjunto interseccion(Conjunto conjunto){
-        int maximo = Math.min(this.MAXIMO, conjunto.MAXIMO);
-        Conjunto interseccion = new Conjunto(maximo);
+        Conjunto interseccion = new Conjunto(Math.min(this.MAXIMO, conjunto.MAXIMO));
         interseccion.insertar(this.datos); interseccion.union(conjunto);
         for(int i = 0; i < this.numElementos; i++){
             if(interseccion.datos[i] == interseccion.datos[i+1]){
@@ -139,8 +141,7 @@ public class Conjunto {
     }
 
     public Conjunto diferencia(Conjunto conjunto){
-        Conjunto diferencia = new Conjunto(this.MAXIMO);
-        diferencia.insertar(this.datos);
+        Conjunto diferencia = this.copia();
         Conjunto interseccion = this.interseccion(conjunto);
         for(int i = 0; i < this.numElementos; i++){
             for(int j = 0; j < this.numElementos; j++){

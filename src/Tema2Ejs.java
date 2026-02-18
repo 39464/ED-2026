@@ -186,4 +186,19 @@ public class Tema2Ejs {
         }
         return menor;
     }
+
+    //pila estrictamente ascendente: elemento actual siempre mayor que el anterior
+    public boolean comprobarOrdenacion(Pila p, int anterior){
+        boolean res = true;
+        int ele;
+        if(!p.vacia()){
+            ele = p.desapilar();
+            if(ele > anterior) res = comprobarOrdenacion(p, anterior);
+            else res = false;
+            p.apilar(ele);
+        }
+        return res;
+    }
+
+    public boolean comprobarOrdenacion(Pila pila){ return comprobarOrdenacion(pila, Integer.MIN_VALUE); }
 }

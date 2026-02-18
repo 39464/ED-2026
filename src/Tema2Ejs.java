@@ -157,11 +157,21 @@ public class Tema2Ejs {
         return quitarPosicionesPares(p, 0);
     }
 
-    public void poneFondoDiferenciaMaximoMinimo(Pila p){
-        int max = mayorElemento(p, Integer.MIN_VALUE);
-        int min = mayorElemento(p, Integer.MAX_VALUE);
-        int dif = max - min;
-        insertarEnFondo(p, dif);
+    public void poneFondoDiferenciaMaximoMinimo(Pila p){ //antes lo hiciste con tres recorridos de la pila, normalmente no se puede
+        if(!p.vacia()){
+            ponerFondoDiferenciaMaximoMinimo(p, Integer.MAX_VALUE, Integer.MIN_VALUE);
+        }
+    }
+
+    private void ponerFondoDiferenciaMaximoMinimo(Pila p, int min, int max){
+        int ele;
+        if(!p.vacia()){
+            ele = p.desapilar();
+            if (ele > max) max = ele;
+            if(ele < min) min = ele;
+            ponerFondoDiferenciaMaximoMinimo(p, min, max);
+            p.apilar(ele);
+        }else p.apilar(max-min);
     }
 
     private int menorElemento(Pila p, int menor){

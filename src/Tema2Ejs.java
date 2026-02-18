@@ -66,4 +66,114 @@ public class Tema2Ejs {
         }
         return res;
     }
+
+    // insertar en el fondo de la pila el dato que te pasan como parámetro
+    private void insertarEnFondo(Pila p, int dato){
+        int ele;
+        if(!p.vacia()){
+            ele = p.desapilar();
+            insertarEnFondo(p, dato);
+            p.apilar(ele);
+        }else p.apilar(dato);
+    }
+
+    public void moverElementoFondo(Pila p){
+        if(!p.vacia()) p.apilar(sacarElemFondo(p));
+    }
+
+    private int sacarElemFondo(Pila p){
+        int ele, res = 0;
+        if (!p.vacia()) {
+            ele = p.desapilar();
+            if(!p.vacia()){
+                res = sacarElemFondo(p); //si no estoy en el ultimo, sigue
+                p.apilar(ele);
+            }else res = ele;
+        }
+        return res;
+    }
+
+    public void hacerPilaCapicua(Pila p){
+        int ele;
+        if(!p.vacia()){
+            ele = p.desapilar();
+            hacerPilaCapicua(p);
+            insertarEnFondo(p, ele);
+            p.apilar(ele);
+        }
+    }
+
+    public int eliminarDato(Pila p, int dato){
+        int ele;
+        int cont= 0;
+        if(!p.vacia()){
+            ele = p.desapilar();
+            cont=eliminarDato(p, ++dato); //????
+            if(ele != dato){
+                p.apilar(ele);
+            }else ++cont;
+        }
+        return cont;
+    }
+
+    public int mayorElemento(Pila p){
+        int res=-1;
+        if(!p.vacia()){
+            res = mayorElemento(p, Integer.MIN_VALUE);
+        }
+        return res;
+    }
+
+    private int mayorElemento(Pila p, int mayor){
+        int ele; int res = -1;
+        if(!p.vacia()){
+            ele = p.desapilar();
+            if(ele > mayor){
+                mayor = ele;
+            }
+            res = mayorElemento(p, mayor);
+            p.apilar(ele);
+        }
+        return mayor;
+    }
+
+    private Pila quitarPosicionesPares(Pila p, int posicion){
+        int ele;
+        Pila res;
+        if(p.vacia()){
+            res = new Pila();
+        }else {
+            ele = p.desapilar();
+            posicion++;
+            res = quitarPosicionesPares(p, posicion);
+            if(posicion % 2 == 0){
+                res.apilar(ele);
+            }else p.apilar(ele);
+        }
+        return res;
+    }
+
+    public Pila quitarPosicionesPares(Pila p){
+        return quitarPosicionesPares(p, 0);
+    }
+
+    public void poneFondoDiferenciaMaximoMinimo(Pila p){
+        int max = mayorElemento(p, Integer.MIN_VALUE);
+        int min = mayorElemento(p, Integer.MAX_VALUE);
+        int dif = max - min;
+        insertarEnFondo(p, dif);
+    }
+
+    private int menorElemento(Pila p, int menor){
+        int ele; int res = -1;
+        if(!p.vacia()){
+            ele = p.desapilar();
+            if(ele < menor){
+                menor = ele;
+            }
+            res = menorElemento(p, menor);
+            p.apilar(ele);
+        }
+        return menor;
+    }
 }

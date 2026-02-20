@@ -23,7 +23,6 @@ public class Tema2EjsColas {
         int n1 = cola1.getNumElementos(), n2 = cola2.getNumElementos();
         int n = Integer.min(n1, n2);
         Cola colaR = new Cola();
-        int resultado = -1;
         int i, j;
         for(i = 0; i < n; i++){
             int ele1 = cola1.desencolar();
@@ -34,10 +33,12 @@ public class Tema2EjsColas {
         n = Integer.max(n1, n2);
         for(j = i; j < n; j++){
             if(n == n1) {
-                colaR.
+                colaR.encolar(cola1.desencolar());
+            }else{
+                colaR.encolar(cola2.desencolar());
             }
-
         }
+        return colaR;
     }
 
     public Cola colaMenores(Cola c1, Cola c2){

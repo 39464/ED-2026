@@ -4,7 +4,10 @@ public class Tema2Ejs {
         int elem;
         if (!p.vacia()){
             elem = p.desapilar();
-
+            repetirNVeces(p,num);
+            for(int i = 0; i < num; i++){
+                p.apilar(elem);
+            }
         }
     }
 

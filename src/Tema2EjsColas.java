@@ -78,6 +78,19 @@ public class Tema2EjsColas {
             int ele = cola.desencolar();
             if(i%2==0){
                 cola.encolar(ele);
+            }else{
+                pila.apilar(ele);
+            }
+        }
+    }
+
+    public void sustituirSegmentoImpares(Cola c){
+        int suma = 0, ele;
+        for(int i= 0; i < c.getNumElementos(); i++){//no uses un for pq no sabes cuantos elementos hay que sacar
+            ele = c.desencolar();
+            if(ele%2!=0){
+                suma += ele;
+
             }
         }
     }

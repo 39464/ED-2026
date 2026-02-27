@@ -115,4 +115,13 @@ public class Lista {
         }
     }
 
+    public void triplicar(){
+        Nodo actual = inicio;
+        while(actual != null){
+            Nodo nuevo1 = new Nodo(actual.getDato(), actual.getSiguiente()); //contiene el dato de actual y apunta al siguiente
+            Nodo nuevo2 = new Nodo(actual.getDato(), nuevo1);
+            actual.setSiguiente(nuevo2);
+            actual = nuevo1.getSiguiente();
+        }
+    }
 }

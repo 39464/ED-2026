@@ -36,6 +36,7 @@ public class Tema2Ejs {
             } else {
                 resul = ele;
             }
+            p.apilar(ele);
         }
     }
 

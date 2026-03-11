@@ -234,8 +234,16 @@ public class Lista {
     }
 
     public Lista (int[] elementos){
-        for(int i=0; i<elementos.length; i++){
-            Nodo nuevo = new Nodo(elementos[i], null);
+        if(this.vacia() || elementos.length == 0){
+            inicio = null;
+            fin = null;
+            numElementos = 0;
+        }else {
+            inicio = new Nodo(elementos[0], null);
+            for (int i = 1; i < elementos.length; i++) {
+                Nodo nuevo = new Nodo(elementos[i], null);
+                fin = nuevo;
+            }
         }
     }
 }

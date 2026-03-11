@@ -49,7 +49,7 @@ public class Lista {
     public boolean borrar(int dato) {
         Nodo actual = inicio;
         Nodo anterior = null;
-        while (actual != null && actual.getDato() !=dato) {
+        while (actual != null && actual.getDato() != dato) {
             anterior = actual;
             actual = actual.getSiguiente();
         }
@@ -115,13 +115,127 @@ public class Lista {
         }
     }
 
-    public void triplicar(){
+    public void triplicar() {
         Nodo actual = inicio;
-        while(actual != null){
+        while (actual != null) {
             Nodo nuevo1 = new Nodo(actual.getDato(), actual.getSiguiente()); //contiene el dato de actual y apunta al siguiente
             Nodo nuevo2 = new Nodo(actual.getDato(), nuevo1);
             actual.setSiguiente(nuevo2);
             actual = nuevo1.getSiguiente();
+        }
+    }
+
+    public void aniadirSumaMayoresDe(int valor) {
+        if (this.vacia()) { //hija siempre considerar el caso en el que esta vacia !!!
+            Nodo nuevo = new Nodo(valor, null);
+            inicio = nuevo;
+        } else {
+            Nodo aux = this.inicio;
+            int suma = 0;
+            while (aux != null) {
+                if (aux.getDato() > valor) {
+                    suma += aux.getDato();
+                }
+                aux = aux.getSiguiente();
+            }
+            Nodo nuevo = new Nodo(suma, inicio);
+            inicio = nuevo;
+        }
+    }
+
+    public boolean contenido(int valor){
+        boolean resultado = false;
+        if(!this.vacia()){
+            Nodo actual = inicio;
+            Nodo anterior = null;
+            while(actual != null && actual.getDato() != valor){
+                anterior = actual;
+                actual = actual.getSiguiente();
+            }
+            if(actual != null){ //encontrado
+                if(actual != inicio) {
+                    anterior.setSiguiente(actual.getSiguiente());
+                    actual.setSiguiente(inicio);
+                    inicio = actual;
+                }
+                resultado = true;
+            }
+        }
+        return resultado;
+    }
+
+    public void imagenEspecular(){
+        Nodo actual = inicio;
+        while(actual!= null){
+            Nodo nuevo = new Nodo(actual.getDato(), inicio);
+            inicio = nuevo;
+            actual = actual.getSiguiente();
+        }
+    }
+
+    public void insertarAContinuacion(int base, int nuevo){
+        Nodo actual = inicio;
+        while(actual != null){
+            if(actual.getDato() == base) {
+                Nodo aux = new Nodo(nuevo, actual.getSiguiente());
+                actual.setSiguiente(aux);
+                actual = aux.getSiguiente();
+            }else{
+            actual = actual.getSiguiente();
+            }
+        }
+    }
+
+    public void insertarCeros(){
+        Nodo actual = inicio;
+        int suma = 0;
+        if(actual != null){
+            while(actual != null) {
+                suma += actual.getDato();
+                actual = actual.getSiguiente();
+            }
+            actual = inicio;
+            while(actual != null){
+                if(suma != 0) {
+                    Nodo nuevo = new Nodo(0, actual.getSiguiente());
+                    actual.setSiguiente(nuevo);
+                    actual = nuevo.getSiguiente();
+                }else{
+                    actual = actual.getSiguiente();
+                }
+            }
+        }
+    }
+
+    public void borrarDuplicar(int dato){
+        if(!this.vacia()){
+            Nodo actual = inicio;
+            Nodo anterior = null;
+            while(actual != null && actual.getDato() != dato){
+                anterior = actual;
+                actual = actual.getSiguiente();
+            }
+            if(actual != null){
+                if(anterior == null){
+                    inicio = actual.getSiguiente();
+                }else{
+                    anterior.setSiguiente(actual.getSiguiente());
+                }
+                actual = actual.getSiguiente();
+            }
+            while(actual != null){
+                if(actual.getDato() == dato){
+                    Nodo nuevo = new Nodo(actual.getDato(), actual.getSiguiente());
+                    actual.setSiguiente(nuevo);
+                    actual = nuevo.getSiguiente();
+                }else actual = actual.getSiguiente();
+            }
+        }
+    }
+
+    public Lista (int[] elementos){
+        for(int i=0; i<elementos.length; i++){
+            Nodo nuevo = new Nodo(elementos[i], null);
         }
     }
 }

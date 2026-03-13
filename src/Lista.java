@@ -233,17 +233,67 @@ public class Lista {
         }
     }
 
-    public Lista (int[] elementos){
-        if(this.vacia() || elementos.length == 0){
-            inicio = null;
-            fin = null;
-            numElementos = 0;
-        }else {
-            inicio = new Nodo(elementos[0], null);
-            for (int i = 1; i < elementos.length; i++) {
-                Nodo nuevo = new Nodo(elementos[i], null);
+    public Lista (int[] elementos) { //TODO
+
+    }
+
+    public void encolar(int prioridad, String paciente){
+        Lista resultado = new Lista();
+        if(!resultado.vacia()){
+            Nodo aux = inicio;
+            Nodo anterior = null;
+            while(aux != null && aux.getDato() <= prioridad){
+                anterior = aux;
+                aux= aux.getSiguiente();
+            }
+            Nodo nuevo = new Nodo(prioridad, aux);
+            if(aux == inicio){
+                inicio = nuevo;
+            }else anterior.setSiguiente(nuevo);
+        }
+    }
+
+    public int insertarNuevos(int[] valores){
+        int insertados = 0;
+        for(int i = 0; i < valores.length; i++){
+            Nodo aux = inicio;
+            while(aux!=null && aux.getDato() != valores[i]){
+                aux = aux.getSiguiente();
+            }
+            if(aux == null){
+                Nodo nuevo = new Nodo(valores[i], null);
+                if(inicio == null){
+                    inicio = nuevo;
+                }else{
+                    fin.setSiguiente(nuevo);
+                }
                 fin = nuevo;
+                insertados++;
             }
         }
+        numElementos+= insertados;
+        return insertados;
+    }
+
+    public void insertarSegunValor(int valor){
+        if(inicio == null){
+            Nodo nuevo = new Nodo(valor, null);
+            inicio = nuevo;
+            fin = nuevo;
+        }else{
+            Nodo aux = inicio;
+            while(aux != null && aux.getDato() != valor){
+                aux = aux.getSiguiente();
+            }
+            if(aux != null){
+                Nodo nuevo = new Nodo(valor, null);
+                fin.setSiguiente(nuevo);
+                fin = nuevo;
+            }else{
+                Nodo nuevo = new Nodo(valor, inicio);
+                inicio = nuevo;
+            }
+        }
+        numElementos++;
     }
 }

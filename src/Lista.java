@@ -233,8 +233,25 @@ public class Lista {
         }
     }
 
-    public Lista (int[] elementos) { //TODO
-
+    public Lista (int[] elementos) {
+        int numElementos=0;
+        Nodo inicio = null;
+        Nodo fin=null;
+        Nodo nuevo = null;
+        for(int i = 0; i < elementos.length; i++){
+            if(inicio == null){
+                nuevo = new Nodo(elementos[0], null);
+                inicio = nuevo;
+                fin = nuevo;
+                numElementos++;
+            }else{
+                nuevo = new Nodo(elementos[i], null);
+                fin.setSiguiente(nuevo);
+                numElementos++;
+            }
+        }
+        fin = nuevo;
+        fin.setSiguiente(null);
     }
 
     public void encolar(int prioridad, String paciente){

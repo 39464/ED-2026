@@ -21,7 +21,6 @@ public class Pila {
         public int desapilar() {
             int valor;
             if (this.vacia()) {
-                System.out.println("Sabes squirtear??");
                 valor = -9999;
             } else {
                 valor = cima.getDato();

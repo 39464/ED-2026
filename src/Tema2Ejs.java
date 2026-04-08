@@ -205,4 +205,21 @@ public class Tema2Ejs {
     }
 
     public boolean comprobarOrdenacion(Pila pila){ return comprobarOrdenacion(pila, Integer.MIN_VALUE); }
+
+    public int secuenciaPositivos (Pila pila) {
+        return secuenciaPositivos(pila, true);
+    }
+    private int secuenciaPositivos (Pila pila, boolean primero) {
+        int resultado = 0;
+        if (!pila.vacia()) {
+            int elemento = pila.desapilar();
+            if (elemento > 0)
+                resultado = 1 + secuenciaPositivos(pila, false);
+            else if (primero)
+                resultado = secuenciaPositivos(pila,true);
+            pila.apilar(elemento);
+        }
+        return resultado;
+    }
 }
+

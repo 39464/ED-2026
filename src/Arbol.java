@@ -69,4 +69,51 @@ public class Arbol {
             } //si ambos hijos son null, no hacer nada
         }//si nodo es null, no hacer nada
     }
+
+    public int sumarHojasNivel(int maxNivel){
+        return sumarHojasNivel(this.raiz, maxNivel, 1);
+    }
+
+    private int sumarHojasNivel(NodoArbol nodo, int nivel, int maxNivel){
+        int res = 0;
+        if(nodo != null && nivel < maxNivel) { //TERMINA DE CONTAR EN EL MAXNIVEL
+            if (nodo.getDerecho() == null && nodo.getIzquierdo() == null) {
+                res = nodo.getDato();
+            } else {
+                res = sumarHojasNivel(nodo.getDerecho(), nivel + 1, maxNivel) + sumarHojasNivel(nodo.getIzquierdo(), nivel + 1, maxNivel);
+            }
+        }
+        return res;
+    }
+
+    public void invertir(){
+        invertir(this.raiz);
+    }
+
+    private NodoArbol invertir(NodoArbol nodo){
+        NodoArbol aux;
+        if(nodo != null){
+            aux = nodo.getIzquierdo();
+            nodo.setIzquierdo(this.invertir(nodo.getDerecho()));
+            nodo.setDerecho(invertir(aux));
+        }
+        return nodo;
+    }
+
+    public boolean esUnivaluado(){
+        if(this.raiz == null) return true;
+        else return esUnivaluado(this.raiz, raiz.getDato());
+    }
+
+    private boolean esUnivaluado(NodoArbol nodo, int valor){
+        boolean res = true;
+        if(nodo != null){
+            res = valor == nodo.getDato() && esUnivaluado(nodo.getIzquierdo(), valor) && esUnivaluado(nodo.getDerecho(), valor);
+        }
+        return res;
+    }
 }
+
+
+
+

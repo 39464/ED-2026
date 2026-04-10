@@ -17,22 +17,6 @@ public class Arbol {
         }
         raiz = new NodoArbol(dato, nodoIzq, nodoDer);
     }
-    public boolean igual(Arbol arbol){
-        return igualRec(this.raiz, arbol.raiz);
-    }
-
-    private boolean igualRec(NodoArbol nodo1, NodoArbol nodo2){
-        boolean resul = false;
-        if(nodo1 == null && nodo2 == null){
-            resul = true;
-        } else if(nodo1 == null || nodo2 == null){
-            resul = false;
-        }else{
-            if(nodo1.getDato() == nodo2.getDato()){
-                resul = igualRec(nodo1.getDerecho(), nodo2.getDerecho());
-            }
-        }
-    }
 
     public int sumaDatosNivel(int nivel){
         return sumaDatosNivel(this.raiz, nivel, 1);
@@ -50,4 +34,39 @@ public class Arbol {
         return res;
     }
 
+    public int altura(){
+        return altura(this.raiz, 1);
+    }
+
+    private int altura(NodoArbol nodo, int cont){
+        int res=0;
+        if(nodo != null){
+            if(nodo.getIzquierdo()== null && nodo.getDerecho()== null){ res = cont; }
+            else{
+                res = Math.max(altura(nodo.getIzquierdo(), cont+1), altura(nodo.getDerecho(), cont+1));
+            }
+        }
+        return res;
+    }
+
+    public void completar2hijos(){
+        if(this.raiz != null) completar2hijos(this.raiz, 1);
+    }
+
+    public void completar2hijos(NodoArbol nodo, int nivel){
+        if(nodo != null){
+            if(nodo.getIzquierdo() != null && nodo.getDerecho() != null){
+                completar2hijos(nodo.getIzquierdo(), nivel+1);
+                completar2hijos(nodo.getDerecho(), nivel+1);
+            }
+            else if(nodo.getIzquierdo() != null){
+                nodo.setDerecho(new NodoArbol(nivel+1, null, null));
+                completar2hijos(nodo.getIzquierdo(), nivel+1);
+            }
+            else if(nodo.getDerecho() != null){
+                nodo.setIzquierdo(new NodoArbol(nivel+1, null, null));
+                completar2hijos(nodo.getDerecho(), nivel+1);
+            } //si ambos hijos son null, no hacer nada
+        }//si nodo es null, no hacer nada
+    }
 }
